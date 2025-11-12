@@ -1,27 +1,14 @@
 #!/bin/bash
-echo "🔧 Setting up environment..."
+echo "🚀 Proxy Agent smart setup starting..."
 
-# Create virtual environment if not exists
-if [ ! -d "venv" ]; then
-  python3 -m venv venv
-  echo "✅ Virtual environment created."
-else
-  echo "🔹 Virtual environment already exists."
+# Detect Python 3.x
+PYTHON=$(command -v python3 || command -v python)
+if [ -z "$PYTHON" ]; then
+  echo "❌ Python 3 not found. Please install Python 3.9 or higher."
+  exit 1
 fi
 
-# Activate it
-source venv/bin/activate
+echo "🧠 Using $($PYTHON --version)"
 
-# Upgrade pip
-pip install --upgrade pip
-
-# Install dependencies
-if [ -f "requirements.txt" ]; then
-  pip install -r requirements.txt
-  echo "✅ Dependencies installed."
-else
-  echo "⚠️ requirements.txt not found!"
-fi
-
-echo "🎉 Setup complete! To run:"
-echo "source venv/bin/activate && python web_agent.py"
+# Run Python setup script
+$PYTHON setup_env.py
